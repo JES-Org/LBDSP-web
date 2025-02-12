@@ -56,7 +56,7 @@ const Footer = () => {
 				</div>
 				<div className="footer-section">
 					<h3>Contact Us</h3>
-					<p>Email: support@medlocator.com</p>
+					<p>Email: support@fetanfews.com</p>
 					<p>Phone: +251 95323 7890</p>
 					<p>Address: Bahir Dar, Ethiopia</p>
 				</div>
@@ -64,35 +64,35 @@ const Footer = () => {
 					<h3>Follow Us</h3>
 					<div className="social-icons">
 						<a
-							href="https://facebook.com/medlocator"
+							href="https://facebook.com/fetanfews"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							<FaFacebookF />
 						</a>
 						<a
-							href="https://twitter.com/medlocator"
+							href="https://twitter.com/fetanfews"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							<FaTwitter />
 						</a>
 						<a
-							href="https://instagram.com/medlocator"
+							href="https://instagram.com/fetanfews"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							<FaInstagram />
 						</a>
 						<a
-							href="https://www.linkedin.com/in/medlocator"
+							href="https://www.linkedin.com/in/fetanfews"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							<FaLinkedinIn />
 						</a>
 						<a
-							href="https://github.com/medlocator"
+							href="https://github.com/fetanfews"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
@@ -102,9 +102,7 @@ const Footer = () => {
 				</div>
 			</div>
 			<div className="footer-bottom">
-				<p>
-					&copy; {new Date().getFullYear()} MedLocator. All rights reserved.
-				</p>
+				<p>&copy; {new Date().getFullYear()} FetanFews. All rights reserved.</p>
 			</div>
 		</footer>
 	);
