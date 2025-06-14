@@ -236,7 +236,13 @@ const ManageMedications: React.FC = () => {
                 <TableRow key={medication.id}>
                   <TableCell>
                     <img
-                      src={medication.image}
+                      src={
+                        typeof medication.image === "string"
+                          ? medication.image
+                          : medication.image instanceof File
+                          ? URL.createObjectURL(medication.image)
+                          : undefined
+                      }
                       alt="No image"
                       style={{
                         width: "50px",
