@@ -33,7 +33,6 @@ const MedicationDetail = () => {
         setError(error);
       } else {
         setMedication(data);
-        console.log("med data from detal", data);
       }
       setLoading(false);
     };

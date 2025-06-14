@@ -24,13 +24,11 @@ const passwordValidation = z
     message: "Password must contain at least one special character.",
   });
 
-const requiredString = (field:string) =>
+const requiredString = (field: string) =>
   z.string().min(1, { message: `${field} is required.` });
 const optionalUrl = z.string().url("Invalid URL.").optional().or(z.literal(""));
-const fileValidation = z
-  .any()
-  .refine((file) => file instanceof File, { message: "Invalid file format." })
-  .optional().nullable();
+
+
 export const formSchema = z
   .object({
     first_name: nameValidation,
@@ -53,25 +51,25 @@ export const pharmacyFormSchema = z.object({
   name: requiredString("Name is required"),
   address: requiredString("Address"),
   phone: phoneValidation,
-
   email: emailValidation,
   website: optionalUrl,
   operating_hours: requiredString("Operating hours"),
   image: z.any().optional(),
   delivery_available: z.boolean(),
   license_number: requiredString("License number"),
-  license_image: fileValidation,
-});
+  license_image: z
+  .any()
+  .refine((files) => files instanceof FileList && files.length > 0, {
+    message: "License image is required",
+  }),});
 
 export const medicationSchema = z.object({
   name: requiredString("Name "),
   price: z.number().min(0, "Price must be a positive number"),
   description: z.string().optional(),
-  category: z
-    .number()
-    .refine((val) => val !== null && val !== undefined, {
-      message: "Category is required",
-    }),
+  category: z.number().refine((val) => val !== null && val !== undefined, {
+    message: "Category is required",
+  }),
   dosage_form: requiredString("Dosage form"),
   dosage_strength: requiredString("Dosage strength"),
   manufacturer: requiredString("Manufacturer"),
@@ -80,7 +78,7 @@ export const medicationSchema = z.object({
   usage_instructions: z.string().optional(),
   quantity_available: z.number().min(1, "Quantity must be at least 1"),
   image: z.any().optional(),
-  prescription_required:z.boolean()
+  prescription_required: z.boolean(),
 });
 
 export const pharmacySchema = z.object({
@@ -97,7 +95,7 @@ export const pharmacySchema = z.object({
 
 export const pharmasistDetailSchema = z.object({
   license_number: requiredString("License Number"),
-  license_image:z.instanceof(File).optional().nullable(),
+  license_image: z.instanceof(File).optional().nullable(),
 
   pharmacy: z.object({
     name: requiredString("Pharmacy Name "),

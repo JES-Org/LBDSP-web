@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import PharmacyList from "../../components/PharmacyList/PharmacyList";
 import { calculateDistance } from "../../utils/calculations";
@@ -17,14 +17,13 @@ const SearchResultsPage: React.FC = () => {
   const navigate = useNavigate();
   const userLocation = useGeoLocation();
   const [visibleCount, setVisibleCount] = useState(5);
+  const searchResultsRef = useRef<HTMLDivElement>(null);
 
   const userCoordinates: [number, number] =
     userLocation.latitude && userLocation.longitude
       ? [userLocation.latitude, userLocation.longitude]
       : defaultCoordinates;
 
-
- 
   useEffect(() => {
     const drugName = searchParams.get("medication");
     const pharmacyName = searchParams.get("pharmacy");
@@ -38,19 +37,22 @@ const SearchResultsPage: React.FC = () => {
     Search({ drugName, pharmacyName }).then((results) => {
       setSearchResults(results);
       setIsLoading(false);
+      if (searchResultsRef.current) {
+        searchResultsRef.current.scrollIntoView({ behavior: "smooth" });
+      }
     });
   }, [searchParams, navigate]);
-  
+
   const handleShowAll = () => {
     setVisibleCount(searchResults.length);
   };
   return (
-    <div className="search-results-page">
+    <div id="search-results" className="search-results-page">
       <HeroSection />
       <div className="search-results-wrapper">
         {/* Distance Filter */}
-        
-        <div className="search-resuls">
+
+        <div ref={searchResultsRef} className="search-resuls">
           {isLoading ? (
             <p>Loading...</p>
           ) : searchResults.length > 0 ? (
@@ -60,10 +62,9 @@ const SearchResultsPage: React.FC = () => {
               </h2>
               <PharmacyList
                 pharmacies={searchResults}
-                  calculateDistance={calculateDistance}
-                  onShowAll={handleShowAll}
-                  showAllButton={visibleCount < searchResults.length}
-
+                calculateDistance={calculateDistance}
+                onShowAll={handleShowAll}
+                showAllButton={visibleCount < searchResults.length}
               />
             </>
           ) : (

@@ -34,7 +34,7 @@ export const Search = async (searchCriteria: {
     // If both search criteria are provided (pharmacy and drug), filter pharmacies
     if (drugName && pharmacyName) {
 
-      return pharmacyResults.filter((pharmacy: any) =>
+      return pharmacyResults.filter((_pharmacy: any) =>
         medicationResults.some(
           (medication: any) =>
             medication&&

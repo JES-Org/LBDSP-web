@@ -3,18 +3,15 @@
 import { useEffect, useState } from "react";
 import {
   useParams,
-  useNavigate,
   useSearchParams,
   Link,
 } from "react-router-dom";
-import axios from "axios";
 import "./PharmacyDetails.scss";
 import { useGeoLocation, defaultCoordinates } from "../../hooks/useGeoLocation";
 import { getPharmacyDetail } from "../../api/pharmacyService";
 import PharmacyMap from "../../components/MapView/MapView";
 import { FaSearch, FaHeartbeat, FaRedo } from "react-icons/fa";
 import { searchPharmacyMedications } from "../../api/medicationService";
-import { string } from "zod";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 // Breadcrumbs Component
 // const Breadcrumbs: React.FC = () => {
@@ -209,13 +206,13 @@ const PharmacyDetailPage: React.FC<PharmacyDetailPageProps> = ({
 
           {/* Medication Search */}
           <div className="medication-search">
-            <div className="search-bar">
+            <div className="ph-search-bar">
               <input
                 type="text"
                 value={searchTerm}
                 onChange={handleInputChange}
                 placeholder="Search by medications name or category"
-                className="search-input"
+                className="ph-search-input"
               />
               <button
                 onClick={() => handleSearch("")}
