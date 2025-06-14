@@ -155,7 +155,7 @@ const PharmacyDetailPage: React.FC<PharmacyDetailPageProps> = ({
         <div className="pharmacy-detail">
           <div className="pharmacy-info-wrapper">
             <img
-              src={`http://127.0.0.1:8000${pharmacy.image}`}
+              src={`https://lbdsp-backend.onrender.com${pharmacy.image}`}
               alt={pharmacy.name}
               className="pharmacy-image"
             />

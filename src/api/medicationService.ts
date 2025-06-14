@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { api } from "./auth";
-const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = "https://lbdsp-backend.onrender.com/api";
 export const searchPharmacyMedications = async (pharmacyId: string, query: string) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/pharmacies/${pharmacyId}/medications/search/`, {

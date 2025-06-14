@@ -308,7 +308,7 @@ const ManagePharmacies: React.FC = () => {
                 <TableRow key={pharmacy.id}>
                   <TableCell sx={{ display: "flex", gap: "10px" }}>
                     <img
-                      src={`http://127.0.0.1:8000${pharmacy.image}`} // Ensure full URL
+                      src={`https://lbdsp-backend.onrender.com${pharmacy.image}`} // Ensure full URL
                       alt="No image"
                       style={{
                         width: "50px",

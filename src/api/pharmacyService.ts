@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "./auth";
 import axios from "axios";
-const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = "https://lbdsp-backend.onrender.com/api";
 
 export const addPharmacy = (data: any) => {
   return api.post("/pharmacies/", data, {

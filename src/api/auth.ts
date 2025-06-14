@@ -2,7 +2,7 @@
 import axios from "axios";
 
 import { SignUpData } from "../utils/interfaces";
-const URL = "http://localhost:8000/api";
+const URL = "https://lbdsp-backend.onrender.com/api";
 
 export const api = axios.create({
   baseURL: URL,
@@ -41,7 +41,7 @@ api.interceptors.response.use(
 
         // Refresh token request
         const refreshResponse = await axios.post(
-          "http://localhost:8000/api/accounts/token/refresh/",
+          "https://lbdsp-backend.onrender.com/api/accounts/token/refresh/",
           { refresh: refreshToken }
         );
         const { access } = refreshResponse.data;
@@ -70,7 +70,7 @@ api.interceptors.response.use(
 export const login = async (data: { username: string; password: string }) => {
   try {
     const response = await axios.post(
-      "http://localhost:8000/api/accounts/token/",
+      "https://lbdsp-backend.onrender.com/api/accounts/token/",
       data
     );
 
@@ -88,7 +88,7 @@ export const login = async (data: { username: string; password: string }) => {
 };export const userRegister = async (data: SignUpData) => {
   try {
     const response = await axios.post(
-      "http://localhost:8000/api/accounts/register/",
+      "https://lbdsp-backend.onrender.com/api/accounts/register/",
       data
     );
     const { refresh, access } = response.data;
