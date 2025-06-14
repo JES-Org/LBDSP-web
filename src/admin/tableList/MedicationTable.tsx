@@ -107,8 +107,7 @@ const MedicationTable: React.FC<MedicationTableProps> = ({
             <table>
               <thead>
                 <tr>
-                  <th>Image</th>
-                  <th>Name</th>
+                  <th>Med Name</th>
                   <th>Price</th>
                   <th>Stock Status</th>
                   <th>Category</th>
@@ -123,17 +122,7 @@ const MedicationTable: React.FC<MedicationTableProps> = ({
               <tbody>
                 {currentMedications.map((medication) => (
                   <tr key={medication.id}>
-                    <td>
-                      <img
-                        src={`http://127.0.0.1:8000${medication.image}`}
-                        alt="No Image"
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          objectFit: "cover",
-                        }}
-                      />
-                    </td>
+                    
                     <td>{medication.name}</td>
                     <td>{medication.price} Birr</td>
                     <td

@@ -15,11 +15,15 @@ export const fetchPharmacyData = async () => {
   const response = await api.get("/pharmacies/");
   return response.data;
 };
+export const fetchAllPharmacies = async () => {
+  const response = await api.get("/pharmacies/all/");
+  return response.data;
+};
 export const editPharmacy = (id: number, data: any) => {
   return api.put(`/pharmacies/${id}/`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
-    }
+    },
   });
 };
 export const deletePharmacy = (id: number) => {
@@ -45,7 +49,6 @@ export const fetchMedicationsData = async () => {
     const response = await api.get("/medications/");
     return response.data;
   } catch (error: any) {
-
     // Check if response exists (handle server errors)
     if (error.response) {
       throw new Error(
@@ -215,25 +218,22 @@ export const getPharmacistDetails = async () => {
   } catch (error: any) {
     console.error("Error fetching pharmacist details:", error);
     const errorMessage =
-    error.response?.data?.detail ||
-    error.response?.data?.message ||
-    "An error occurred while fetching data.";
+      error.response?.data?.detail ||
+      error.response?.data?.message ||
+      "An error occurred while fetching data.";
 
-  throw errorMessage;
+    throw errorMessage;
   }
 };
 
 // Function to update pharmacist details
 export const updatePharmacistDetails = async (updatedData: any) => {
-
   try {
-    const response = await api.put("/pharmacist/get_or_update/", updatedData
-      ,{
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await api.put("/pharmacist/get_or_update/", updatedData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   } catch (error: any) {
     const errorMessage =
@@ -244,8 +244,6 @@ export const updatePharmacistDetails = async (updatedData: any) => {
     throw errorMessage;
   }
 };
-
-
 
 //repors
 
@@ -260,10 +258,48 @@ export const getPharmacyStatusReport = async () => {
 };
 export const fetchPharmaciesWithoutPharmacists = async () => {
   try {
-    const response = await api.get('/pharmacies-without-pharmacists/');
-    return response.data; 
+    const response = await api.get("/pharmacies-without-pharmacists/");
+    return response.data;
   } catch (error) {
     console.error("Error fetching pharmacies without pharmacists:", error);
-    throw error; 
+    throw error;
+  }
+};
+
+export const registerPharmacy = async (formData: any) => {
+  try {
+    const response = await api.post("/pharmacies/register/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error ||
+      error.response?.data?.detail ||
+      error.response?.data?.message ||
+      "An error occurred while updating data.";
+    throw errorMessage;
+  }
+};
+
+
+
+export const fetchNotifications = async () => {
+  try {
+    const response = await api.get('/notifications/' );
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+    return [];
+  }
+};
+
+export const markNotificationAsRead = async ( notificationId: number) => {
+  try {
+    await api.post(`notifications/read/${notificationId}/`);
+  } catch (error) {
+    console.error('Error marking notification as read:', error);
   }
 };

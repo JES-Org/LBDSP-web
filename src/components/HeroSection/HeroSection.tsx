@@ -9,16 +9,10 @@ import { medicationType } from "../../utils/interfaces";
 const HeroSection: React.FC = () => {
   const navigate = useNavigate();
   const queryParams = new URLSearchParams();
-  // const frequentlySearchedDrugs = [
-  //   "Paracetamol",
-  //   "Ibuprofen",
-  //   "Amoxicillin",
-  //   "Metformin",
-  //   "Aspirin",
-  // ];
+
   const [frequentlySearchedDrugs, setFrequentlySearchedDrugs] = useState<
     medicationType[]
-    >([]);
+  >([]);
 
   const handleDrugSearch = (drug: string) => {
     if (drug) queryParams.append("medication", drug);
@@ -43,7 +37,9 @@ const HeroSection: React.FC = () => {
             We have all the drugs your doctor prescribed for your health and
             what’s more, we can get it to you.
           </p>
-          <SearchBar />
+          <div className="search-section">
+            <SearchBar />
+          </div>
 
           {frequentlySearchedDrugs.length > 0 && (
             <div className="frequently-searched">

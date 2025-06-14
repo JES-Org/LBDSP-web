@@ -32,7 +32,7 @@ const Breadcrumbs = () => {
            
           </>
         ) : (
-          <span>{pharmacyName}</span> // ✅ Display pharmacy name without a link
+          <span>{pharmacyName}</span> 
         )
       ) : null}
 

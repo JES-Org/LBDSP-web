@@ -9,7 +9,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   children,
   requiredRole,
 }) => {
-  const user = localStorage.getItem("user");
+  const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") as string) : null;
 
   const location = useLocation();
 
@@ -20,6 +20,10 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
       state={{ from: location }}
       replace
     />;
+  }
+  else if (requiredRole === "admin" && user?.role === "user") {
+    return <Navigate to="/Does-Not_exists" replace />;
+    
   }
   return <>{children}</>;
 };
