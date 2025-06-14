@@ -9,7 +9,7 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 // import SearchIcon from '@mui/icons-material/Search';
 import { useContext, useEffect, useState } from "react";
 // import axios from 'axios'
-import { Modal, Button } from "@mui/material";
+import { Modal, Button ,Typography} from "@mui/material";
 import { ColorContext } from "../../contexts/ColorContext";
 
 // import sass file
@@ -18,14 +18,25 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { Logout } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
-
+import {
+  fetchNotifications,
+  markNotificationAsRead,
+} from "../../api/pharmacyService";
 interface propTypes {
-  onToggleSidebar: ()=>void
-  onToggleSidebarShrunk: ()=>void,
-};
-const Header: React.FC<propTypes> = ({ onToggleSidebar, onToggleSidebarShrunk }) => {
+  onToggleSidebar: () => void;
+  onToggleSidebarShrunk: () => void;
+}
+interface Notification {
+  id: number;
+  message: string;
+  is_read: boolean;
+}
+const Header: React.FC<propTypes> = ({
+  onToggleSidebar,
+  onToggleSidebarShrunk,
+}) => {
   const [unreadNotifications, setUnreadNotifications] = useState(0);
-  const [notificationList, setNotificationList] = useState([]);
+  const [notificationList, setNotificationList] = useState<Notification []>([]);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   // color state management using react context
@@ -40,14 +51,14 @@ const Header: React.FC<propTypes> = ({ onToggleSidebar, onToggleSidebarShrunk })
 
     onToggleSidebarShrunk();
   };
-  const { user} = useAuth();
+  const { user } = useAuth();
 
   // Fetch unread notifications count
-  const fetchNotifications = async () => {
+  const getNotifications = async () => {
     try {
-      // const response = await axios.get('http://127.0.0.1:8000/api/notifications/');
-      setNotificationList([]);
-      setUnreadNotifications(0);
+      const data = await fetchNotifications();
+      setNotificationList(data);
+      setUnreadNotifications(data.length);
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
@@ -57,18 +68,17 @@ const Header: React.FC<propTypes> = ({ onToggleSidebar, onToggleSidebarShrunk })
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-  const markNotificationsAsRead = async () => {
+  const markAsRead = async (id:number) => {
     try {
-      // const response = await axios.post('http://127.0.0.1:8000/api/notifications/');
-      setUnreadNotifications(0);
-      // setNotificationList(response.data);
+      await markNotificationAsRead(id);
+      setUnreadNotifications(unreadNotifications-1);
       setOpen(false);
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
   };
   useEffect(() => {
-    fetchNotifications();
+    getNotifications();
   }, []);
   const handleLogout = async () => {
     await Logout();
@@ -125,7 +135,6 @@ const Header: React.FC<propTypes> = ({ onToggleSidebar, onToggleSidebarShrunk })
                 >
                   <em> Login </em>
                 </Link>
-                /
               </div>
               {/* <div>
                 <Link
@@ -156,9 +165,17 @@ const Header: React.FC<propTypes> = ({ onToggleSidebar, onToggleSidebarShrunk })
             )}
           </div>
           <div className="item">
-              {isFullscreen ? <FullscreenIcon
-                className="item_icon" onClick={handleToggleShrunk} /> : <FullscreenExitIcon
-                className="item_icon" onClick={handleToggleShrunk}/>}{" "}
+            {isFullscreen ? (
+              <FullscreenIcon
+                className="item_icon"
+                onClick={handleToggleShrunk}
+              />
+            ) : (
+              <FullscreenExitIcon
+                className="item_icon"
+                onClick={handleToggleShrunk}
+              />
+            )}{" "}
           </div>
 
           <div className="item">
@@ -176,59 +193,56 @@ const Header: React.FC<propTypes> = ({ onToggleSidebar, onToggleSidebarShrunk })
           </div>
         </div>
       </div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="notification-modal-title"
-        aria-describedby="notification-modal-description"
+      <Modal open={open} onClose={handleClose} aria-labelledby="notification-modal-title">
+      <div
+        className="modal-content"
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 400,
+          backgroundColor: "white",
+          border: "2px solid #000",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          padding: "20px",
+          borderRadius: "8px",
+        }}
       >
-        <div
-          className="modal-content"
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            backgroundColor: "white",
-            border: "2px solid #000",
-            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-            padding: "20px",
-            borderRadius: "8px",
-          }}
-        >
-          <h2 id="notification-modal-title">Notifications</h2>
-          {notificationList.length > 0 ? (
-            notificationList.map((notification) => (
-              <div key={notification} className="notification-item">
-                {notification}
-              </div>
-            ))
-          ) : (
-            <p id="notification-modal-description">No new notifications</p>
-          )}
-          <Button
-            onClick={handleClose}
-            variant="contained"
-            color="primary"
-            style={{ margin: "10px" }}
-          >
-            Close
-          </Button>
-          {notificationList.length > 0 && (
-            <Button
-              onClick={markNotificationsAsRead}
-              variant="contained"
-              color="primary"
-              style={{ margin: "10px" }}
-            >
-              Mark as Read
-            </Button>
-          )}
-        </div>
-      </Modal>
+        <Typography variant="h6" id="notification-modal-title" gutterBottom>
+          Notifications
+        </Typography>
+        {notificationList.length > 0 ? (
+          notificationList.map((notification) => (
+            <div key={notification.id} className="notification-item" style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+              <Typography variant="body1" style={{ textDecoration: notification.is_read ? "line-through" : "none" }}>
+                {notification.message}
+              </Typography>
+              {!notification.is_read && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  style={{ marginTop: "5px" }}
+                  onClick={() => markAsRead(notification.id)}
+                >
+                  Mark as Read
+                </Button>
+              )}
+            </div>
+          ))
+        ) : (
+          <Typography variant="body2" id="notification-modal-description">
+            No new notifications
+          </Typography>
+        )}
+        <Button onClick={handleClose} variant="contained" color="secondary" style={{ marginTop: "10px" }}>
+          Close
+        </Button>
+      </div>
+    </Modal>
     </div>
   );
-}
+};
 
 export default Header;

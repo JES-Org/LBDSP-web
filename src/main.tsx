@@ -12,7 +12,8 @@ createRoot(document.getElementById('root')!).render(
     <AuthProvider>
     <ColorContextProvider>
       <App />
-    </ColorContextProvider>    </AuthProvider>
+      </ColorContextProvider>
+    </AuthProvider>
     
-  </StrictMode>,
+  </StrictMode>
 )

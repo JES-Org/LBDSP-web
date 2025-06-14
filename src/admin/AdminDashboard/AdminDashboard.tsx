@@ -109,9 +109,15 @@ const AdminHome: React.FC = () => {
                     </Link>
                   </div>
                   <div className="card">
-                    <Link to="/admin/settings" className="link">
-                      <SettingsRoundedIcon className="icon" />
-                      <h3>Settings</h3>
+                    <Link to="/admin/manage-categories" className="link">
+                      <EditIcon className="icon" />
+                      <h3> Drug Categories</h3>
+                    </Link>
+                  </div>
+                  <div className="card">
+                    <Link to="/admin/reports" className="link">
+                      <AssessmentIcon className="icon" />
+                      <h3>Reports</h3>
                     </Link>
                   </div>
                 </>

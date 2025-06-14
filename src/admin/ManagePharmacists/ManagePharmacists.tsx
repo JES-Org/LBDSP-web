@@ -185,7 +185,6 @@ const ManagePharmacists: React.FC = () => {
       handleCloseModal();
     } catch (error) {
       const err = error as any;
-      console.error("Error submitting pharmacist:", err.response?.data);
       const errorMessage =
         err.response?.data?.errors?.license_number?.[0] ||
         err.response?.data?.message ||
@@ -224,7 +223,7 @@ const ManagePharmacists: React.FC = () => {
   };
 
   const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
+    _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
@@ -259,7 +258,7 @@ const ManagePharmacists: React.FC = () => {
         <Typography variant="h4">Manage Pharmacists</Typography>
 
         <TextField
-          className="search-bar"
+          className="pharmacist-search-bar"
           label="Search"
           variant="outlined"
           fullWidth
@@ -385,7 +384,7 @@ const ManagePharmacists: React.FC = () => {
             options={filteredUsers}
             getOptionLabel={(option) => option.email || ""}
             value={formData.user || null}
-            onChange={(event, value) =>
+            onChange={(_event, value) =>
               setFormData({ ...formData, user: value ? value : null })
             }
             renderInput={(params) => (
@@ -402,7 +401,7 @@ const ManagePharmacists: React.FC = () => {
             options={pharmacies}
             getOptionLabel={(option) => option?.name || ""}
             value={formData.pharmacy || null}
-            onChange={(event, value) =>
+            onChange={(_event, value) =>
               setFormData({ ...formData, pharmacy: value || null })
             }
             renderInput={(params) => (

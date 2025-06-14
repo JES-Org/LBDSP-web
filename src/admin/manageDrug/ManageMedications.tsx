@@ -139,7 +139,7 @@ const ManageMedications: React.FC = () => {
   );
 
   // Handle page change
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
@@ -184,7 +184,7 @@ const ManageMedications: React.FC = () => {
           </Typography>
 
           <TextField
-            className="search-bar"
+            className="med-search-bar"
             label="Search Medications"
             variant="outlined"
             fullWidth
