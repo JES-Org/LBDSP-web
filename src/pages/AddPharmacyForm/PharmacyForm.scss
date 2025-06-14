@@ -69,13 +69,23 @@ $success-color: #28a745;
 
       .yes-no-group {
         display: flex;
-        gap: 15px;
-        label {
-          font-weight: normal;
-        }
-        input {
-          margin-right: 5px;
-        }
+        align-items: center;
+        gap: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        margin-top: 20px;
+      }
+      
+      .yes-no-group label {
+        color: #333;
+      }
+      
+      .yes-no-group input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        accent-color: #4CAF50; /* Green checkbox when checked */
+        border-radius: 4px;
       }
 
       .error {

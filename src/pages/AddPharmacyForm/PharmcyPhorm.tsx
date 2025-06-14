@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { pharmacyFormSchema } from "../../utils/validateForm";
 import "./PharmacyForm.scss";
-import { addPharmacy } from "../../api/pharmacyService";
+import { registerPharmacy } from "../../api/pharmacyService";
 import { useNavigate } from "react-router-dom";
-import { containerVariants ,itemVariants} from "../../utils/animateVariant";
+import { containerVariants, itemVariants } from "../../utils/animateVariant";
 import { motion } from "framer-motion";
 
 interface PharmacyFormValues {
@@ -27,6 +27,7 @@ const PharmacyForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm<PharmacyFormValues>({
     resolver: zodResolver(pharmacyFormSchema),
   });
@@ -34,31 +35,31 @@ const PharmacyForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSubmit = async (data: PharmacyFormValues) => {
+    clearErrors();
     setErrorMessage(null);
+
     const formData = new FormData();
-    console.log(formData);
 
     Object.entries(data).forEach(([key, value]) => {
       if (key === "image" || key === "license_image") {
-        if (value?.[0]) {
-          formData.append(key, value[0]); // Append file
+        if (value instanceof FileList && value.length > 0) {
+          formData.append(key, value[0]); // FileList handling
+        } else if (value instanceof File) {
+          formData.append(key, value); // Single File handling
         }
       } else if (value !== null && value !== undefined) {
-        formData.append(key, value); // Append other fields
+        formData.append(key, value);
       }
     });
-
     try {
-      const response = await addPharmacy(formData);
-      console.log("Response:", response.data);
-      navigate("/pharmacy-registration/success");
+      await registerPharmacy(formData);
+      
+    
+      
+        navigate("/pharmacy-registration/success");
+      
     } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.detail ||
-        JSON.stringify(error.response?.data, null, 2) ||
-        "An error occurred. Please try again.";
-      setErrorMessage(`Failed to register pharmacy: ${errorMessage}`);
-      console.error("Error:", errorMessage);
+      setErrorMessage(error);
     }
   };
 
@@ -66,17 +67,18 @@ const PharmacyForm: React.FC = () => {
     <div className="container-wrapper">
       <motion.div
         className="pharmacy-form-container"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        variants={containerVariants}
       >
-        <motion.h2
-        variants={itemVariants}>Register Pharmacy</motion.h2>
+        <motion.h2 variants={itemVariants}>Register Pharmacy</motion.h2>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
-        <motion.form onSubmit={handleSubmit(onSubmit)}
+        <motion.form
+          onSubmit={handleSubmit(onSubmit)}
           variants={itemVariants}
-          className="pharmacy-form">
+          className="pharmacy-form"
+        >
           <div className="form-group">
             <div>
               <label htmlFor="name">Name:</label>
@@ -165,24 +167,11 @@ const PharmacyForm: React.FC = () => {
             <div className="yes-no-group">
               <label>Delivery Available:</label>
 
-              <label htmlFor="delivery_yes">
-                <input
-                  id="delivery_yes"
-                  type="radio"
-                  value="true"
-                  {...register("delivery_available")}
-                />
-                Yes
-              </label>
-              <label htmlFor="delivery_no">
-                <input
-                  id="delivery_no"
-                  type="radio"
-                  value="false"
-                  {...register("delivery_available")}
-                />
-                No
-              </label>
+              <input
+                type="checkbox"
+                id="delivery_available"
+                {...register("delivery_available")}
+              />
             </div>
             {errors.delivery_available && (
               <p className="error">{errors.delivery_available.message}</p>
@@ -209,6 +198,7 @@ const PharmacyForm: React.FC = () => {
               <input
                 id="license_image"
                 type="file"
+                accept="image/*"
                 {...register("license_image")}
               />
             </div>

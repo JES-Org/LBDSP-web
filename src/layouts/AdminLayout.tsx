@@ -1,15 +1,12 @@
-import React, { useRef, useEffect, useState, useContext } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Sidebar from "../admin/sidebar/Sidebar";
 import Header from "../admin/header/Header";
 import { Outlet } from "react-router-dom";
-import ItemLists from "../admin/ItemList/PharmacyItemList";
 import "./adminlayout.scss";
-import { ColorContext } from "../contexts/ColorContext";
 
 const AdminLayout: React.FC = () => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(false);
-  const { darkMode } = useContext(ColorContext);
   const [isSidebarShrunk, setIsSidebarShrunk] = useState<boolean>(false);
 
   // Toggle sidebar visibility
@@ -17,7 +14,6 @@ const AdminLayout: React.FC = () => {
     setIsSidebarVisible((prev) => !prev);
   };
   const handleToggleSidebarShrunk = () => {
-    console.log("Toggle sidebar called");
     setIsSidebarShrunk((prev) => !prev);
   };
   useEffect(() => {

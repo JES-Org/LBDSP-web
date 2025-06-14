@@ -43,7 +43,7 @@
 
 				input {
 					width: 80%;
-					padding: 10px;
+					padding: 15px;
 					border: 1px solid #ccc;
 					border-radius: 4px;
 					&:focus {
@@ -102,5 +102,42 @@
 			width: 100%;
 			height: 100%;
 		}
+	}
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+	.auth-page {
+		flex-direction: column;
+		align-items: center;
+		.auth-container {
+			
+			width: 80%;
+			padding: 20px;
+		}
+	
+		form {
+			padding: 0;
+		}
+	
+	}
+
+	.auth-image {
+		display: none;
+	}
+}
+
+@media (max-width: 768px) {
+	.auth-container {
+		width: 90%;
+		padding: 20px;
+	}
+
+	form {
+		padding: 0;
+	}
+
+	button {
+		width: 100%;
 	}
 }
