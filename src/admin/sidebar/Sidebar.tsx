@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./sidebar.scss";
 import {
@@ -6,13 +6,14 @@ import {
   Group as GroupIcon,
   Edit as EditIcon,
   Assessment as AssessmentIcon,
-  AccountCircle as AccountCircleIcon,
+
   SettingsRounded as SettingsRoundedIcon,
   Logout as LogoutIcon,
 } from "@mui/icons-material";
-import { ColorContext } from "../../contexts/ColorContext";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { Logout } from "../../api/auth";
 // import { AuthContext } from '../../contexts/AuthContext';
 interface SidebarProps {
   onLinkClick: () => void;
@@ -21,11 +22,13 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ onLinkClick, isShrunk }) => {
   const { pathname } = useLocation();
-  const { darkMode } = useContext(ColorContext);
-  const colorStyle: React.CSSProperties = {
-    color: darkMode ? "#fff" : "#000",
-  };
+ 
   const { user } = useAuth();
+  const navigate = useNavigate();
+    const handleLogout = async () => {
+      await Logout();
+      navigate("/admin/login");
+    };
   return (
     <div className={`sidebar ${isShrunk ? "shrunk" : ""}`}>
       <div className="links">
@@ -141,7 +144,11 @@ const Sidebar: React.FC<SidebarProps> = ({ onLinkClick, isShrunk }) => {
                 onClick={onLinkClick}
               >
                 <li
-                  className={pathname === "/admin/pharmacist/reports" ? "active-link" : ""}
+                  className={
+                    pathname === "/admin/pharmacist/reports"
+                      ? "active-link"
+                      : ""
+                  }
                 >
                   <AssessmentIcon className="icon" />
                   <span>Reports</span>
@@ -149,9 +156,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onLinkClick, isShrunk }) => {
               </Link>{" "}
             </>
           ) : (
-              <>
-             
-                <Link
+            <>
+              <Link
                 to="/admin/reports"
                 style={{ textDecoration: "none" }}
                 onClick={onLinkClick}
@@ -163,37 +169,29 @@ const Sidebar: React.FC<SidebarProps> = ({ onLinkClick, isShrunk }) => {
                   <span>Reports</span>
                 </li>
               </Link>
-              </>
+            </>
           )}
 
           <p className="spann">Settings</p>
-          <Link
-            to="/admin/pharmacist/settings"
-            style={{ textDecoration: "none" }}
-            onClick={onLinkClick}
-          >
-            <li
-              className={
-                pathname === "/admin/pharmacist/settings" ? "active-link" : ""
-              }
+          {user?.role === "pharmacist" && (
+            <Link
+              to="/admin/pharmacist/settings"
+              style={{ textDecoration: "none" }}
+              onClick={onLinkClick}
             >
-              <SettingsRoundedIcon className="icon" />
-              <span>Settings</span>
-            </li>
-          </Link>
+              <li
+                className={
+                  pathname === "/admin/pharmacist/settings" ? "active-link" : ""
+                }
+              >
+                <SettingsRoundedIcon className="icon" />
+                <span>Settings</span>
+              </li>
+            </Link>
+          )}
 
-          <Link
-            to="/admin/profile"
-            style={{ textDecoration: "none" }}
-            onClick={onLinkClick}
-          >
-            <li className={pathname === "/admin/profile" ? "active-link" : ""}>
-              <AccountCircleIcon className="icon" />
-              <span>Profile</span>
-            </li>
-          </Link>
 
-          <li>
+          <li onClick={handleLogout}>
             <LogoutIcon className="icon" />
             <span>Log Out</span>
           </li>

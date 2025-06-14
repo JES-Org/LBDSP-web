@@ -6,45 +6,111 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    width: 100%;
 
     .title {
       font-size: 2rem;
       font-weight: bold;
       color: #333;
+      width: auto;
+
     }
+    .search-add {
 
-    .add-button {
-      background-color: green;
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      padding: 10px 20px;
-      border-radius: 50px;
-    }
-  }
-
-  .search-bar {
-    margin: 20px auto;
-    width: 50%;
-    input {
-      outline: none;
-
-      font-size: 1rem;
-      padding: 10px;
-      border-radius: 10px;
-      width: 100%;
-      &:focus {
-        border-color: #007bff;
-        outline: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 60%;
+      .pharmacy-add-button {
+        background-color: green;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        border-radius: 50px;
+        padding: 10px;
       }
     }
-  }
+   
+    .pharmacy-search-bar {
+      margin: 20px auto;
+      width: 50%;
+      input {
+        outline: none;
+       width: 100%;
+        font-size: 1rem;
+        padding: 15px;
+        border-radius: 10px;
+        &:focus {
+          border-color: #007bff;
+          outline: none;
+        }
+      }
+    }
+    }
 
   .table-container {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+  }
+}
+@media (max-width: 1200px) {
+  .top-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
 
-   
+    .search-add {
+      display: flex;
+      width: 100%;
+      border: 1px solid red;
+      .pharmacy-search-bar {
+        margin: auto;
+        width: 60%;
+        input {
+         width: 100%;
+          
+        }
+
+      }
+      
+
+    }
+  }
+
+  
+}
+
+@media (max-width: 768px) {
+  .top-section {
+    .title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .pharmacy-search-bar {
+    width: 80%;
+  }
+
+  .table-container {
+    box-shadow: none; // Remove shadow for smaller screens
+  }
+}
+
+@media (max-width: 480px) {
+  .pharmacy-search-bar {
+    width: 100%;
+  }
+
+  .top-section {
+    .title {
+      font-size: 1.2rem;
+    }
+
+    .pharmacy-add-button {
+      padding: 10px;
+      font-size: 0.9rem;
+    }
   }
 }

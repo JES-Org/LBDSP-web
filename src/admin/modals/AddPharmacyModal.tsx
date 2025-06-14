@@ -42,6 +42,7 @@ const AddPharmacyModal: React.FC<AddPharmacyModalProps> = ({
     longitude?: string;
     latitude?: string;
   }>({});
+  
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 11.5742,
     lng: 37.3614,
@@ -75,11 +76,9 @@ const AddPharmacyModal: React.FC<AddPharmacyModalProps> = ({
     setErrors({})
     // Zod validation
     const validation = pharmacySchema.safeParse(formData);
-    console.log("validation.success",validation.success)
 
     if (!validation.success) {
       const errorMessages = validation.error.format();
-      console.log("errorMessages",errorMessages)
 
       setErrors({
         name: errorMessages.name?._errors[0] || "",

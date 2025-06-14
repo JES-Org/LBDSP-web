@@ -60,7 +60,15 @@ const PharmacistProfile = () => {
         // Populate pharmacy fields, ensuring they are set at the correct path
         Object.keys(data.pharmacy).forEach((key) => {
           if (key !== "image") {
-            setValue(`pharmacy.${key}`, data.pharmacy[key]);
+            setValue(`pharmacy.${key}` as
+              | "pharmacy.name"
+              | "pharmacy.phone"
+              | "pharmacy.email"
+              | "pharmacy.operating_hours"
+              | "pharmacy.website"
+              | "pharmacy.delivery_available",
+              data.pharmacy[key]
+            );
           }
         });
       } catch (error: any) {

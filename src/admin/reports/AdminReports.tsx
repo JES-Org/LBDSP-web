@@ -86,7 +86,7 @@ const AdminReports: React.FC = () => {
                     outerRadius={100}
                     label
                   >
-                    {verificationReport.map((entry, index) => (
+                    {verificationReport.map((_entry, index) => (
                       <Cell
                         key={`cell-${index}`}
                         fill={PHARMACYCOLORS[index % COLORS.length]}

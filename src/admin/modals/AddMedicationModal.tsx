@@ -81,7 +81,6 @@ const AddMedicationModal: React.FC<AddMedicationModalProps> = ({
 
   useEffect(() => {
     if (isEdit && medication) {
-      console.log("editing medication", medication);
       setFormData({
         name: medication.name,
         price: Number(medication.price),
@@ -131,7 +130,6 @@ const AddMedicationModal: React.FC<AddMedicationModalProps> = ({
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      console.log("updaloedde data", file);
       // Check if the file is an image
       if (!file.type.startsWith("image/")) {
         showSnackbar("Please upload a valid image file.", "error");
@@ -232,7 +230,7 @@ const AddMedicationModal: React.FC<AddMedicationModalProps> = ({
               value={
                 categories.find((cat) => cat.id === formData.category) || null
               }
-              onChange={(event, newValue) => {
+              onChange={(_event, newValue) => {
                 setFormData({
                   ...formData,
                   category: newValue ? newValue.id : "",

@@ -27,7 +27,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { pharmacyFormData, pharmacyType } from "../../utils/interfaces";
 import {
   addPharmacy,
-  fetchPharmacyData,
+  fetchAllPharmacies,
   editPharmacy,
   deletePharmacy,
 } from "../../api/pharmacyService";
@@ -75,7 +75,7 @@ const ManagePharmacies: React.FC = () => {
 
   const fetchPharmacy = async () => {
     try {
-      const data = await fetchPharmacyData();
+      const data = await fetchAllPharmacies();
       setPharmacies(data);
     } catch (error) {
       showSnackbar("Failed to fetch medications.", "error");
@@ -216,7 +216,7 @@ const ManagePharmacies: React.FC = () => {
   );
 
   // Handle page change
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
@@ -252,34 +252,38 @@ const ManagePharmacies: React.FC = () => {
   return (
     <>
       <div className="manage-pharmacies">
-        <Box className="top-section">
+        <Box
+          className="top-section"
+         
+        >
           <Typography className="title" variant="h4" gutterBottom>
             Manage Pharmacies
           </Typography>
-          <TextField
-            className="search-bar"
-            label="Search Pharmacies"
-            variant="outlined"
-            fullWidth
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Button
-            className="add-button"
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={() => handleOpenForm()}
-          >
-            Add Pharmacy
-          </Button>
+          <Box className="search-add">
+            <TextField
+              className="pharmacy-search-bar"
+              label="Search Pharmacies"
+              variant="outlined"
+              fullWidth
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Button
+              className="pharmacy-add-button"
+              variant="contained"
+              onClick={() => handleOpenForm()}
+             
+            >
+              + Add Pharmacy
+            </Button>
+          </Box>
         </Box>
 
         <TableContainer className="table-container" component={Paper}>
@@ -302,7 +306,7 @@ const ManagePharmacies: React.FC = () => {
             <TableBody>
               {paginatedPharmacies.map((pharmacy: pharmacyType) => (
                 <TableRow key={pharmacy.id}>
-                  <TableCell sx={{display:'flex', gap:"10px"}}>
+                  <TableCell sx={{ display: "flex", gap: "10px" }}>
                     <img
                       src={`http://127.0.0.1:8000${pharmacy.image}`} // Ensure full URL
                       alt="No image"
@@ -311,8 +315,8 @@ const ManagePharmacies: React.FC = () => {
                         height: "50px",
                         objectFit: "cover",
                       }}
-                    />
-                    {' '} {pharmacy.name}
+                    />{" "}
+                    {pharmacy.name}
                   </TableCell>
                   <TableCell>{pharmacy.address}</TableCell>
 
