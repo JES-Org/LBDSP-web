@@ -11,7 +11,7 @@ const PharmacyList: React.FC<PharmacyListProps> = ({
   calculateDistance,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; 
+  const itemsPerPage = 6;
 
   const userLocation = useGeoLocation();
   const userCoordinates: [number, number] =
@@ -39,11 +39,14 @@ const PharmacyList: React.FC<PharmacyListProps> = ({
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const displayedPharmacies = sortedPharmacies.slice(indexOfFirstItem, indexOfLastItem);
+  const displayedPharmacies = sortedPharmacies.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
   const totalPages = Math.ceil(pharmacies.length / itemsPerPage);
 
   return (
-    <div className="pharmacies-list-wrapper">
+    <div id="pharmacy-list" className="pharmacies-list-wrapper">
       <ul className="pharmacies-list">
         {displayedPharmacies.map((pharmacy) => (
           <motion.li
@@ -62,7 +65,9 @@ const PharmacyList: React.FC<PharmacyListProps> = ({
             />
             <h3>
               <Link
-                to={`/pharmacy/${encodeURIComponent(pharmacy.name)}?id=${pharmacy.id}`}
+                to={`/pharmacy/${encodeURIComponent(pharmacy.name)}?id=${
+                  pharmacy.id
+                }`}
               >
                 {pharmacy.name}
               </Link>
@@ -99,7 +104,9 @@ const PharmacyList: React.FC<PharmacyListProps> = ({
 
           <button
             className="pagination-button"
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
             disabled={currentPage === totalPages}
           >
             Next

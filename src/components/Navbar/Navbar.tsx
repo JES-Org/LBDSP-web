@@ -18,7 +18,7 @@ const Header = () => {
 		<header className="header">
 			<nav className="navbar">
 				<Link to="/" className="navbar-logo">
-					FeranFews
+					FetanFews
 				</Link>
 
 				<div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>

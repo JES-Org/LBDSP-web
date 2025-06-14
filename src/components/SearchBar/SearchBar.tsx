@@ -77,6 +77,7 @@ const SearchBar: React.FC = () => {
 		setDrugSuggestions([]);
 
 		navigate(`/search-results/?${queryParams.toString()}`);
+		
 	};
 
 	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
