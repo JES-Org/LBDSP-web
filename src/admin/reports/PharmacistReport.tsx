@@ -1,7 +1,7 @@
 import React from "react";
 import DrugAvailabilityChart from "../chart/DrugAvailabilityChart";
 import MostSearchedMedicationsChart from "../chart/MostSearchedDrug";
-import './PharmacistReport.scss'
+import './Pharmacistreport.scss'
 const PharmacistReports: React.FC = () => {
   return (
     <div className="reports-wrapper">
