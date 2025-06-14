@@ -71,7 +71,6 @@ const HomePage: React.FC = () => {
         setFilteredPharmacies(pharmacies);
       }
     } catch (err) {
-      console.error(err);
       setError("Failed to fetch data");
       setSelectedCategory(null);
       setFilteredPharmacies([]);

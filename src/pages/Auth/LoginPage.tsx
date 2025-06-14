@@ -56,13 +56,8 @@ const Login: React.FC = () => {
 			<div className="auth-container">
 				{from === "/" ? (
 					<>
-						<h2>Please Login!</h2>
-						<p>
-							LocateMed has a strong protocol that a user should use their own
-							phone number or email address and password to login. If you are
-							booking for someone else, please use their phone number to
-							register.
-						</p>
+						<h2> Login!</h2>
+						
 					</>
 				) : (
 					<h2>User Login</h2>

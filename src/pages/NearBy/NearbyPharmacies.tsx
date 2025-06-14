@@ -17,7 +17,6 @@ const NearbyPharmacies: React.FC = () => {
     lower: number;
     upper: number;
   }>({ lower: 0, upper: 5 });
-  const [visibleCount, setVisibleCount] = useState(5);
   const [error, setError] = useState<string | null>(null);
 
   const userLocation = useGeoLocation();
@@ -69,9 +68,7 @@ const NearbyPharmacies: React.FC = () => {
     fetchNearbyPharmacies(selectedRange.lower, selectedRange.upper);
   }, [selectedRange]);
 
-  const handleShowAll = () => {
-    setVisibleCount(searchResults.length);
-  };
+
   if (error) {
     return (
       <div className="error-message">

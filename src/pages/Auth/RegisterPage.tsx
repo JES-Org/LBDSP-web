@@ -68,10 +68,7 @@ const SignUp: React.FC = () => {
 				<p>
 					Welcome to LocateMed! To ensure a seamless and secure experience,
 					every user must register with their own **unique phone number** or
-					**email address**. Please note: If you are booking on behalf of
-					someone else, use their phone number to create the account. Ensure
-					that all information provided is accurate, as it will be used for
-					account verification and booking confirmations.
+					**email address**. 
 				</p>
 
 				{submissionMessage && <p className="error">{submissionMessage}</p>}

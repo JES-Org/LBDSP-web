@@ -10,7 +10,6 @@ const PharmacyConfrimation: React.FC = () => {
         <p>We will review the details and notify you of any updates.</p>
         <div className="actions">
           <button onClick={() => window.location.href = "/"}>Go to Home</button>
-          <button onClick={() => window.location.href = "/register"}>Register Another Pharmacy</button>
         </div>
       </div>
     </div>
