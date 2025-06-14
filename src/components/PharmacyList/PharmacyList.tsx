@@ -59,7 +59,7 @@ const PharmacyList: React.FC<PharmacyListProps> = ({
             transition={{ duration: 0.5 }}
           >
             <img
-              src={`https://lbdsp-backend.onrender.com${pharmacy.image}`}
+              src={pharmacy.image}
               alt={pharmacy.name}
               className="pharmacy-image"
             />

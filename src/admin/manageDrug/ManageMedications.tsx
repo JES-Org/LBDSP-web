@@ -236,7 +236,7 @@ const ManageMedications: React.FC = () => {
                 <TableRow key={medication.id}>
                   <TableCell>
                     <img
-                      src={`https://lbdsp-backend.onrender.com${medication.image}`}
+                      src={medication.image}
                       alt="No image"
                       style={{
                         width: "50px",

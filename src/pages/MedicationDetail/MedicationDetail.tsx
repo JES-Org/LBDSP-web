@@ -58,7 +58,7 @@ const MedicationDetail = () => {
             <img
               src={
                 medication.image
-                  ? `https://lbdsp-backend.onrender.com${medication.image}`
+                  ?medication.image
                   : drugImage
               }
               alt={medication.name}
