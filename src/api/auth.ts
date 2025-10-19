@@ -2,7 +2,7 @@
 import axios from "axios";
 
 import { SignUpData } from "../utils/interfaces";
-const URL = "https://lbdsp-backend.onrender.com/api";
+const URL = "https://lbdsp-backend-1.onrender.com/api";
 
 export const api = axios.create({
   baseURL: URL,
@@ -41,7 +41,7 @@ api.interceptors.response.use(
 
         // Refresh token request
         const refreshResponse = await axios.post(
-          "https://lbdsp-backend.onrender.com/api/accounts/token/refresh/",
+          "https://lbdsp-backend-1.onrender.com/api/accounts/token/refresh/",
           { refresh: refreshToken }
         );
         const { access } = refreshResponse.data;
@@ -70,7 +70,7 @@ api.interceptors.response.use(
 export const login = async (data: { username: string; password: string }) => {
   try {
     const response = await axios.post(
-      "https://lbdsp-backend.onrender.com/api/accounts/token/",
+      "https://lbdsp-backend-1.onrender.com/api/accounts/token/",
       data
     );
 
@@ -83,12 +83,15 @@ export const login = async (data: { username: string; password: string }) => {
 
     return response;
   } catch (error: any) {
+  console.error("Login error response:", error.response?.data);
     throw error.response?.data?.detail || "Login failed";
   }
-};export const userRegister = async (data: SignUpData) => {
+};
+
+export const userRegister = async (data: SignUpData) => {
   try {
     const response = await axios.post(
-      "https://lbdsp-backend.onrender.com/api/accounts/register/",
+      "https://lbdsp-backend-1.onrender.com/api/accounts/register/",
       data
     );
     const { refresh, access } = response.data;
